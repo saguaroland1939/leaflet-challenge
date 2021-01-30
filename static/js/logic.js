@@ -1,6 +1,18 @@
 // * * *
+// Logic.js creates the map rendered by index.html. Logic.js reads in data from a live USGS dataset and a geojson stored in geojson.js.
+//
+// The web map displays global earthquake events recorded by USGS over the past 24 hours.
+// The live dataset is maintained by USGS at https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php 
+// and is loaded dynamically into the map using D3.
+//
+// Tectonic plate boundaries are overlaid on the map for context. A tectonic plates geojson layer was obtained 
+// from a public GitHub repo, https://github.com/fraxen/tectonicplates, and originated from http://peterbird.name/oldFTP/PB2002/.
 // 
-// 
+// The base maps are provided by MapBox, with a free API account.
+//
+// The map is built with Leaflet and utilizes D3 to read in the data.
+//
+// Additional functionality to adjust circle sizes with zoom level is under construction.
 // *
 
 
