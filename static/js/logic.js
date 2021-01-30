@@ -47,7 +47,7 @@ function createMarkers(response)
     createMap(circleLayerGroup, earthquake, circles);
   }
   
-  function createMap(circleLayerGroup, earthquake, circles) 
+  function createMap(circleLayerGroup) 
   {
     // Reads in geogson from geojson.js.
     var tectonicPlatesLayer = L.geoJSON(geoJSONFeatureCollection);
@@ -70,14 +70,14 @@ function createMarkers(response)
   
     // Creates an object to hold the basemap. This will be passed to the layer control.
     var baseMapChoices = {
-      "Base map 1": basemap1,
-      "Base map 2": basemap2
+      "Dark map": basemap1,
+      "Satellite imagery": basemap2
     };
   
     // Creates an object to hold the layer group. This will be passed to the layer control.
     var overlayChoices = {
-      "Circles": circleLayerGroup,
-      "Plates": tectonicPlatesLayer
+      "Earthquake events": circleLayerGroup,
+      "Plate boundaries": tectonicPlatesLayer
     };
   
     // Creates the map object and adds zoomend function to resize circles when user zooms.
