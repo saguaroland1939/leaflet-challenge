@@ -10,4 +10,4 @@
 #
 #### I am currently exploring ways to adjust the size of the earthquake event circles as the user zooms in.
 #
-#### To view the map, download the repo and run index.html.
+#### To view the map, download this repo and run index.html.
