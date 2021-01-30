@@ -1,6 +1,6 @@
 # Today's Tectonic Activity
 #
-#### This web map displays global earthquake events recorded over the past 24 hours. The live dataset is maintained by USGS at https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php and is loaded dynamically into the map using D3.
+#### This web map displays global earthquake events recorded by USGS over the past 24 hours. The live dataset is maintained by USGS at https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php and is loaded dynamically into the map using D3.
 #
 #### Tectonic plate boundaries are overlaid on the map for context. A tectonic plates geojson layer was obtained from a public GitHub repo, https://github.com/fraxen/tectonicplates, and originated from http://peterbird.name/oldFTP/PB2002/.
 #
