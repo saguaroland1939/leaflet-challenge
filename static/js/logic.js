@@ -3,6 +3,8 @@
 // 
 // *
 
+
+
 function createMarkers(response) 
 {
     // Pulls the "stations" property off of response.data
@@ -47,29 +49,42 @@ function createMarkers(response)
   
   function createMap(circleLayerGroup, earthquake, circles) 
   {
-    // Creates the tile layer that will be the background of our map
-    var basemap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-      attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    // Reads in geogson from geojson.js.
+    var tectonicPlatesLayer = L.geoJSON(geoJSONFeatureCollection);
+
+    // Creates the tile layer that will be one background option for the map
+    var basemap1 = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+      attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> Hugo Ahlenius, Nordpil and Peter Bird, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
       maxZoom: 18,
       id: "dark-v10",
+      accessToken: API_KEY
+    });
+
+    // Creates the tile layer that will be one background option for the map
+    var basemap2 = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+      attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> Hugo Ahlenius, Nordpil and Peter Bird, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+      maxZoom: 18,
+      id: "satellite-v9",
       accessToken: API_KEY
     });
   
     // Creates an object to hold the basemap. This will be passed to the layer control.
     var baseMapChoices = {
-      "Base map": basemap
+      "Base map 1": basemap1,
+      "Base map 2": basemap2
     };
   
     // Creates an object to hold the layer group. This will be passed to the layer control.
     var overlayChoices = {
-      "Circles": circleLayerGroup
+      "Circles": circleLayerGroup,
+      "Plates": tectonicPlatesLayer
     };
   
-    // Creates the map object with default parameters
+    // Creates the map object and adds zoomend function to resize circles when user zooms.
     var map = L.map("map", {
         center: [25, 0],
         zoom: 3,
-        layers: [basemap, circleLayerGroup]
+        layers: [basemap1, circleLayerGroup]
     }).on("zoomend", function() {
         circleLayerGroup.eachLayer(function(layer) {
             layer.setRadius(20000);
@@ -80,6 +95,9 @@ function createMarkers(response)
     L.control.layers(baseMapChoices, overlayChoices, {
       collapsed: false
     }).addTo(map);
+
+    // Adds tectonic plates geojson layer to map.
+    tectonicPlatesLayer.addTo(map);
   }
 
   // Declares function to select color based on depth of earthquake event
@@ -91,8 +109,11 @@ function createMarkers(response)
              depth < 500 ? "#808080":
                        "#000000"
   };
-  
-// Read in API data, then call createMarkers function, passing API response. 
-d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", createMarkers);
 
+// Read in earthquake dataset and pass to function to create markers.
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(earthquakeLocations) {
+
+  // Pass earthquake locations to function to create markers.
+  createMarkers(earthquakeLocations);
+});
 
